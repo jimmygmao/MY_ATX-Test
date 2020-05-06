@@ -1,0 +1,854 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Pixel 4自动化测试报告</title>
+    <meta name="generator" content="HTMLTestRunner 1.2.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="https://img.hcharts.cn/highcharts/highcharts.js"></script>
+    <script src="https://img.hcharts.cn/highcharts/modules/exporting.js"></script>
+    
+<style type="text/css" media="screen">
+body        { font-family: Microsoft YaHei;padding: 20px; font-size: 100%; }
+table       { font-size: 100%; }
+.table tbody tr td{
+            vertical-align: middle;
+        }
+
+/* -- heading ---------------------------------------------------------------------- */
+.heading .description, .attribute {
+    clear: both;
+}
+
+/* --- 失败和错误合集样式 -- Gelomen --- */
+.failCollection, .errorCollection {
+    width: 100px;
+    float: left;
+}
+#failCaseOl li {
+    color: red
+}
+#errorCaseOl li {
+    color: orange
+}
+
+/* --- 打开截图特效样式 -- Gelomen --- */
+.data-img{
+    cursor:pointer
+}
+
+.pic_looper{
+    width:100%;
+    height:100%;
+    position: fixed;
+    left: 0;
+    top:0;
+    opacity: 0.6;
+    background: #000;
+    display: none;
+    z-index: 100;
+}
+
+.pic_show{
+    width:100%;
+    position:fixed;
+    left:0;
+    top:0;
+    right:0;
+    bottom:0;
+    margin:auto;
+    text-align: center;
+    display: none;
+    z-index: 100;
+}
+
+.pic_box{
+    padding:10px;
+    width:90%;
+    height:90%;
+    margin:40px auto;
+    text-align: center;
+    overflow: hidden;
+}
+
+.pic_box img{
+    width: auto;
+    height: 100%;
+    -moz-box-shadow: 0px 0px 20px 0px #000;
+    -webkit-box-shadow: 0px 0px 20px 0px #000;
+    box-shadow: 0px 0px 20px 0px #000;
+}
+
+/* --- 饼状图div样式 -- Gelomen --- */
+#container {
+    width: 450px;
+    height: 300px;
+    float: left;
+}
+
+/* -- report ------------------------------------------------------------------------ */
+#total_row  { font-weight: bold; }
+.passCase   { color: #5cb85c; }
+.failCase   { color: #d9534f; font-weight: bold; }
+.errorCase  { color: #f0ad4e; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+.screenshot:link { text-decoration: none;color: deeppink; }
+.screenshot:visited { text-decoration: none;color: deeppink; }
+.screenshot:hover { text-decoration: none;color: darkcyan; }
+.screenshot:active { text-decoration: none;color: deeppink; }
+</style>
+
+</head>
+<body >
+<script language="javascript" type="text/javascript">
+
+    $(function(){
+        // 修改 失败 和 错误 用例里对应按钮的颜色ClassName为动态加载 -- Gelomen
+    	$("button").each(function () {
+    	    var text = $(this).text();
+    	    if(text == "失败"){
+    	        $(this).addClass("btn-danger")
+            }else if(text == "错误") {
+                $(this).addClass("btn-warning")
+            }
+        });
+
+        // 给失败和错误合集加样式 -- Gelomen
+        var p_attribute = $("p.attribute");
+        p_attribute.eq(4).addClass("failCollection");
+        p_attribute.eq(5).addClass("errorCollection");
+
+        // 打开截图，放大，点击任何位置可以关闭图片  -- Gelomen
+        $(".screenshot").click(function(){
+            var img = $(this).attr("img");
+            $('.pic_show img').attr('src', img);
+            $('.pic_looper').fadeIn(200);
+            $('.pic_show').fadeIn(200);
+
+            var browserHeight = $(window).height();
+            var pic_boxHeight = $(".pic_box").height();
+            var top = (browserHeight - pic_boxHeight)/2;
+            $('.pic_box').css("margin-top", top + "px")
+
+        });
+        $('.pic_looper, .pic_show').click(function(){
+            $('.pic_looper').fadeOut(200);
+            $('.pic_show').fadeOut(200)
+        });
+        
+        var browserWidth = $(window).width();
+        var margin_left = browserWidth/2 - 450;
+        if(margin_left <= 240){
+            $("#container").css("margin", "auto");
+        }else {
+            $("#container").css("margin-left", margin_left + "px");
+        }
+
+        $(window).resize(function(){
+            // 改变窗口大小时，自动改变图片与顶部的距离  -- Gelomen
+            var browserHeight = $(window).height();
+            var pic_boxHeight = $(".pic_box").height();
+            var top = (browserHeight - pic_boxHeight)/2;
+            $('.pic_box').css("margin-top", top + "px");
+
+
+            // 改变窗口大小时，自动改变饼图的边距  -- Gelomen
+            var browserWidth = $(window).width();
+            var margin_left = browserWidth/2 - 450;
+            if(margin_left <= 240){
+                $("#container").css("margin", "auto");
+            }else {
+                $("#container").css("margin-left", margin_left + "px");
+            }
+        });
+
+        // 距离顶部超过浏览器窗口一屏时，回到顶部按钮才出现  -- Gelomen
+        $(window).scroll(function(){
+            var browserHeight = $(window).height();
+            var top = $(window).scrollTop();
+            if(top >= browserHeight){
+                $("#toTop").css("display", "block")
+            }else {
+                $("#toTop").css("display", "none")
+            }
+        })
+        
+        // 增加回到顶部过程的动画，以看上去不会那么生硬  -- Gelomen
+        $("#toTop").click(function() {
+            $("html,body").animate({"scrollTop":0}, 700)
+        })
+        
+        // 增加饼状图  -- Gelomen
+        $('#container').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                spacing : [0, 0, 0, 0]
+            },
+            credits: {
+                enabled: false
+            },
+            navigation: {
+                buttonOptions: {
+                    enabled: false
+                }
+            },
+            title: {
+                floating:true,
+                text: '测试结果占比'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    colors: ['#81ca9d', '#f16d7e', '#fdc68c'],
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    },
+                    point: {
+                        events: {
+                            mouseOver: function(e) {  // 鼠标滑过时动态更新标题
+                                chart.setTitle({
+                                    text: e.target.name+ '\t'+ e.target.y + ' 个'
+                                });
+                            }
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                innerSize: '80%',
+                name: '比例',
+                data: [
+                    ['通过', 8],
+                    {
+                        name: '失败',
+                        y: 1,
+                        sliced: true,
+                        selected: true
+                    },
+                    ['错误', 3]
+                ]
+            }]
+        }, function(c) {
+            // 环形图圆心
+            var centerY = c.series[0].center[1],
+                titleHeight = parseInt(c.title.styles.fontSize);
+            c.setTitle({
+                y:centerY + titleHeight/2
+            });
+            chart = c;
+        });
+        
+        // 查看 失败 和 错误 合集链接文字切换  -- Gelomen
+        $(".showDetail").click(function () {
+            if($(this).html() == "点击查看"){
+                $(this).html("点击收起")
+            }else {
+                $(this).html("点击查看")
+            }
+        })
+    });
+    
+    
+output_list = Array();
+
+/*level 调整增加只显示通过用例的分类 --Findyou / 修复筛选显示bug --Gelomen
+0:Summary //all hiddenRow
+1:Failed  //pt&et hiddenRow, ft none
+2:Pass    //pt none, ft&et hiddenRow
+3:Error   //pt&ft hiddenRow, et none
+4:All     //all none
+*/
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level == 2 || level == 0 || level == 3) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+                // 切换筛选时只显示预览   -- Gelomen
+                $("div[id^='div_ft']").attr("class", "collapse");
+                $("div[id^='div_et']").attr("class", "collapse");
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level == 1 || level == 0 || level == 3) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+                // 切换筛选时只显示预览   -- Gelomen
+                $("div[id^='div_ft']").attr("class", "collapse");
+                $("div[id^='div_et']").attr("class", "collapse");
+            }
+        }
+        if (id.substr(0,2) == 'et') {
+            if (level == 1 || level == 0 || level == 2) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+                // 切换筛选时只显示预览   -- Gelomen
+                $("div[id^='div_ft']").attr("class", "collapse");
+                $("div[id^='div_et']").attr("class", "collapse");
+            }
+        }
+    }
+
+    //加入【详细】切换文字变化 --Findyou
+    detail_class=document.getElementsByClassName('detail');
+	//console.log(detail_class.length)
+	if (level == 3) {
+		for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="收起"
+		}
+	}
+	else{
+			for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="详细"
+		}
+	}
+}
+
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        //ID修改 点 为 下划线 -Findyou
+        tid0 = 't' + cid.substr(1) + '_' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+            if (!tr) {
+                tid = 'e' + tid0;
+                tr = document.getElementById(tid);
+            }
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
+        if (toHide) {
+            document.getElementById(tid).className = 'hiddenRow';
+            document.getElementById(cid).innerText = "详细"
+        }
+        else {
+            document.getElementById(tid).className = '';
+            document.getElementById(cid).innerText = "收起"
+        }
+    }
+}
+
+function html_escape(s) {
+    s = s.replace(/&/g,'&amp;');
+    s = s.replace(/</g,'&lt;');
+    s = s.replace(/>/g,'&gt;');
+    return s;
+}
+</script>
+<div class='pic_looper'></div> <div class='pic_show'><div class='pic_box'><img src=''/></div> </div>
+<div class='heading'>
+<div style="width: 650px; float: left;">
+    <h1 style="font-family: Microsoft YaHei">Pixel 4自动化测试报告</h1>
+    <p class='attribute'><strong>测试人员 : </strong> QA</p>
+<p class='attribute'><strong>开始时间 : </strong> 2020-05-05 01:17:19</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:01:50.216875</p>
+<p class='attribute'><strong>测试结果 : </strong> 共计 12，通过 8，失败 1，错误 3，通过率 = 66.67%</p>
+<p class='attribute'><strong>失败用例合集 : </strong> <div class='panel-default' style='float: left;'><a class='showDetail' data-toggle='collapse' href='#failCaseOl' style='text-decoration: none;'>点击查看</a></div><ol id='failCaseOl' class='collapse' style='float: left;'><li>test_02_fail (test_01_install.apk_install)</li></ol></p>
+<p class='attribute'><strong>错误用例合集 : </strong> <div class='panel-default' style='float: left;'><a class='showDetail' data-toggle='collapse' href='#errorCaseOl' style='text-decoration: none;'>点击查看</a></div><ol id='errorCaseOl' class='collapse' style='float: left;'><li>test_04_error (test_01_install.apk_install)</li><li>test_04_webview_chromedriver (test_02_bootstrap.TestBootStrap)</li><li>test_05_webview_u2 (test_02_bootstrap.TestBootStrap)</li></ol></p>
+
+    <p class='description'>用例执行情况：</p>
+</div>
+<div id="container"></div>
+</div>
+
+
+
+<div style="width: 500px; clear: both;">
+<p id='show_detail_line'>
+<a class="btn btn-primary" href='javascript:showCase(0)'>概要</a>
+<a class="btn btn-success" href='javascript:showCase(2)'>通过: 8 </a>
+<a class="btn btn-danger" href='javascript:showCase(1)'>失败: 1 </a>
+<a class="btn btn-warning" href='javascript:showCase(3)'>错误: 3 </a>
+<a class="btn btn-info" href='javascript:showCase(4)'>所有: 12 </a>
+</p>
+</div>
+<table id='result_table' class="table table-condensed table-bordered table-hover">
+<colgroup>
+<col align='left' style="width: 300px;"/>
+<col align='right' style="width: 300px;"/>
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' style="width: 200px;"/>
+</colgroup>
+<tr id='header_row' class="text-center success" style="font-weight: bold;font-size: 14px;">
+    <td>用例集/测试用例</td>
+    <td>说明</td>
+    <td>总计</td>
+    <td>通过</td>
+    <td>失败</td>
+    <td>错误</td>
+    <td>耗时</td>
+    <td>详细</td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>apk_install</td>
+    <td></td>
+    <td class="text-center">4</td>
+    <td class="text-center">2</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">33.71秒</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',4)" class="detail" id='c1'>详细</a></td>
+</tr>
+
+<tr id='pt1_1' class='hiddenRow'>
+    <td class='passCase' style="vertical-align: middle"><div class='testcase'>test_01_install_apk</div></td>
+    <td style="vertical-align: middle">安装启动android_app_bootstrap</td>
+    <td colspan='5' align='center'>
+    
+    <!--默认收起错误信息 -Findyou-->
+    <button id='btn_pt1_1' type="button"  class="btn btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse">  
+
+    <!-- 默认展开错误信息 -Findyou /  修复失败按钮的颜色 -- Gelomen 
+    <button id='btn_pt1_1' type="button"  class="btn btn-xs" data-toggle="collapse" data-target='#div_pt1_1,#div_pt1_1_screenshot'>通过</button>
+    <div id='div_pt1_1' class="collapse in"> -->
+    
+    <pre style="text-align:left">
+    
+pt1_1: start to install android_app_bootstrap-debug.apk
+start install /data/local/tmp/android_app_bootstrap-debug.apk
+01:17:39 Success
+[33m[W 200505 01:17:39 watcher:62][39m watch already stopped
+--&gt; login_page.wait_page
+
+
+    </pre>
+    </div>
+    <td class="text-center" style="vertical-align: middle">
+    <div </div></td>
+</tr>
+
+<tr id='ft1_2' class='none'>
+    <td class='failCase' style="vertical-align: middle"><div class='testcase'>test_02_fail</div></td>
+    <td style="vertical-align: middle">异常处理</td>
+    <td colspan='5' align='center'>
+    
+    <!--默认收起错误信息 -Findyou-->
+    <button id='btn_ft1_2' type="button"  class="btn btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_2'>失败</button>
+    <div id='div_ft1_2' class="collapse">  
+
+    <!-- 默认展开错误信息 -Findyou /  修复失败按钮的颜色 -- Gelomen 
+    <button id='btn_ft1_2' type="button"  class="btn btn-xs" data-toggle="collapse" data-target='#div_ft1_2,#div_ft1_2_screenshot'>失败</button>
+    <div id='div_ft1_2' class="collapse in"> -->
+    
+    <pre style="text-align:left">
+    
+ft1_2: Login
+失败截图一张
+手动截图一张
+IMAGE:Manual_20200505011753.PNG
+Traceback (most recent call last):
+  File "E:\Code\MY_ATX-Test\Public\Decorator.py", line 114, in wrapper
+    ret = func(*args, **kwargs)
+AssertionError: 'Login' != '登录'
+- Login
++ 登录
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Code\MY_ATX-Test\Public\Decorator.py", line 124, in wrapper
+    raise AssertionError(flag + _screenshot(func.__qualname__))
+AssertionError: IMAGE:apk_install.test_02_fail-20200505011753.PNG
+
+
+    </pre>
+    </div>
+    <td class="text-center" style="vertical-align: middle">
+    <div </br><a class="screenshot" href="javascript:void(0)" img="Manual_20200505011753.PNG">Manual_20200505011753.PNG</a></br><a class="screenshot" href="javascript:void(0)" img="apk_install.test_02_fail-20200505011753.PNG">apk_install.test_02_fail-20200505011753.PNG</a></div></td>
+</tr>
+
+<tr id='pt1_3' class='hiddenRow'>
+    <td class='passCase' style="vertical-align: middle"><div class='testcase'>test_03_screenshot</div></td>
+    <td style="vertical-align: middle">手动截图测试</td>
+    <td colspan='5' align='center'>
+    
+    <!--默认收起错误信息 -Findyou-->
+    <button id='btn_pt1_3' type="button"  class="btn btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_3'>通过</button>
+    <div id='div_pt1_3' class="collapse">  
+
+    <!-- 默认展开错误信息 -Findyou /  修复失败按钮的颜色 -- Gelomen 
+    <button id='btn_pt1_3' type="button"  class="btn btn-xs" data-toggle="collapse" data-target='#div_pt1_3,#div_pt1_3_screenshot'>通过</button>
+    <div id='div_pt1_3' class="collapse in"> -->
+    
+    <pre style="text-align:left">
+    
+pt1_3: IMAGE:Manual_20200505011753.PNG
+IMAGE:Manual_20200505011754.PNG
+
+
+    </pre>
+    </div>
+    <td class="text-center" style="vertical-align: middle">
+    <div </br><a class="screenshot" href="javascript:void(0)" img="Manual_20200505011753.PNG">Manual_20200505011753.PNG</a></br><a class="screenshot" href="javascript:void(0)" img="Manual_20200505011754.PNG">Manual_20200505011754.PNG</a></div></td>
+</tr>
+
+<tr id='et1_4' class='none'>
+    <td class='errorCase' style="vertical-align: middle"><div class='testcase'>test_04_error</div></td>
+    <td style="vertical-align: middle">错误处理</td>
+    <td colspan='5' align='center'>
+    
+    <!--默认收起错误信息 -Findyou-->
+    <button id='btn_et1_4' type="button"  class="btn btn-xs collapsed" data-toggle="collapse" data-target='#div_et1_4'>错误</button>
+    <div id='div_et1_4' class="collapse">  
+
+    <!-- 默认展开错误信息 -Findyou /  修复失败按钮的颜色 -- Gelomen 
+    <button id='btn_et1_4' type="button"  class="btn btn-xs" data-toggle="collapse" data-target='#div_et1_4,#div_et1_4_screenshot'>错误</button>
+    <div id='div_et1_4' class="collapse in"> -->
+    
+    <pre style="text-align:left">
+    
+et1_4: 手动出错
+Traceback (most recent call last):
+  File "E:\Code\MY_ATX-Test\Public\Decorator.py", line 114, in wrapper
+    ret = func(*args, **kwargs)
+  File "E:\Code\MY_ATX-Test\TestSuite_demo\TestCase\test_01_install.py", line 76, in test_04_error
+    raise Exception('手动ERROR!!!!!!!')
+Exception: 手动ERROR!!!!!!!
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Code\MY_ATX-Test\Public\Decorator.py", line 132, in wrapper
+    raise Exception(flag + _screenshot(func.__qualname__))
+Exception: IMAGE:apk_install.test_04_error-20200505011754.PNG
+
+
+    </pre>
+    </div>
+    <td class="text-center" style="vertical-align: middle">
+    <div </br><a class="screenshot" href="javascript:void(0)" img="apk_install.test_04_error-20200505011754.PNG">apk_install.test_04_error-20200505011754.PNG</a></div></td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>TestBootStrap</td>
+    <td>BootStrap demo测试</td>
+    <td class="text-center">8</td>
+    <td class="text-center">6</td>
+    <td class="text-center">0</td>
+    <td class="text-center">2</td>
+    <td class="text-center">74.75秒</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c2',8)" class="detail" id='c2'>详细</a></td>
+</tr>
+
+<tr id='pt2_1' class='hiddenRow'>
+    <td class='passCase' style="vertical-align: middle"><div class='testcase'>test_01_login</div></td>
+    <td style="vertical-align: middle">登录</td>
+    <td colspan='5' align='center'>
+    
+    <!--默认收起错误信息 -Findyou-->
+    <button id='btn_pt2_1' type="button"  class="btn btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse">  
+
+    <!-- 默认展开错误信息 -Findyou /  修复失败按钮的颜色 -- Gelomen 
+    <button id='btn_pt2_1' type="button"  class="btn btn-xs" data-toggle="collapse" data-target='#div_pt2_1,#div_pt2_1_screenshot'>通过</button>
+    <div id='div_pt2_1' class="collapse in"> -->
+    
+    <pre style="text-align:left">
+    
+pt2_1: --&gt; login_page.wait_page
+C:\Users\Boss\AppData\Roaming\Python\Python37\site-packages\uiautomator2\__init__.py:558: RuntimeWarning: uiautomator2 is not reponding, restart uiautomator2 automatically
+  stacklevel=1)
+--&gt; login_page.input_username
+输入用户名:123456一二三
+--&gt; login_page.input_password
+输入密码:654321
+--&gt; login_page.click_login_btn
+点击登录按钮
+
+
+    </pre>
+    </div>
+    <td class="text-center" style="vertical-align: middle">
+    <div </div></td>
+</tr>
+
+<tr id='pt2_2' class='hiddenRow'>
+    <td class='passCase' style="vertical-align: middle"><div class='testcase'>test_02_show_toast</div></td>
+    <td style="vertical-align: middle">获取toast</td>
+    <td colspan='5' align='center'>
+    
+    <!--默认收起错误信息 -Findyou-->
+    <button id='btn_pt2_2' type="button"  class="btn btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_2'>通过</button>
+    <div id='div_pt2_2' class="collapse">  
+
+    <!-- 默认展开错误信息 -Findyou /  修复失败按钮的颜色 -- Gelomen 
+    <button id='btn_pt2_2' type="button"  class="btn btn-xs" data-toggle="collapse" data-target='#div_pt2_2,#div_pt2_2_screenshot'>通过</button>
+    <div id='div_pt2_2' class="collapse in"> -->
+    
+    <pre style="text-align:left">
+    
+pt2_2: 点击Toast按钮后的toast信息为:
+Toast
+点击Show Dialog后的toast信息为:
+Hello
+
+
+    </pre>
+    </div>
+    <td class="text-center" style="vertical-align: middle">
+    <div </div></td>
+</tr>
+
+<tr id='pt2_3' class='hiddenRow'>
+    <td class='passCase' style="vertical-align: middle"><div class='testcase'>test_03_auto_click_alert</div></td>
+    <td style="vertical-align: middle">弹窗自动点击测试</td>
+    <td colspan='5' align='center'>
+    
+    <!--默认收起错误信息 -Findyou-->
+    <button id='btn_pt2_3' type="button"  class="btn btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_3'>通过</button>
+    <div id='div_pt2_3' class="collapse">  
+
+    <!-- 默认展开错误信息 -Findyou /  修复失败按钮的颜色 -- Gelomen 
+    <button id='btn_pt2_3' type="button"  class="btn btn-xs" data-toggle="collapse" data-target='#div_pt2_3,#div_pt2_3_screenshot'>通过</button>
+    <div id='div_pt2_3' class="collapse in"> -->
+    
+    <pre style="text-align:left">
+    
+pt2_3: --&gt; home_page.click_tab
+点击Tab HOME
+[32m[I 200505 01:18:16 watcher:123][39m XPath(hook:): ['yes']
+[32m[I 200505 01:18:19 watcher:123][39m XPath(hook:): ['yes']
+[32m[I 200505 01:18:19 watcher:123][39m XPath(hook:): ['yes']
+[32m[I 200505 01:18:22 watcher:123][39m XPath(hook:): ['yes']
+IMAGE:Manual_20200505011824.PNG
+[32m[I 200505 01:18:25 watcher:123][39m XPath(hook:): ['yes']
+[33m[W 200505 01:18:32 watcher:62][39m watch already stopped
+
+
+    </pre>
+    </div>
+    <td class="text-center" style="vertical-align: middle">
+    <div </br><a class="screenshot" href="javascript:void(0)" img="Manual_20200505011824.PNG">Manual_20200505011824.PNG</a></div></td>
+</tr>
+
+<tr id='et2_4' class='none'>
+    <td class='errorCase' style="vertical-align: middle"><div class='testcase'>test_04_webview_chromedriver</div></td>
+    <td style="vertical-align: middle">chromedriver webview测试</td>
+    <td colspan='5' align='center'>
+    
+    <!--默认收起错误信息 -Findyou-->
+    <button id='btn_et2_4' type="button"  class="btn btn-xs collapsed" data-toggle="collapse" data-target='#div_et2_4'>错误</button>
+    <div id='div_et2_4' class="collapse">  
+
+    <!-- 默认展开错误信息 -Findyou /  修复失败按钮的颜色 -- Gelomen 
+    <button id='btn_et2_4' type="button"  class="btn btn-xs" data-toggle="collapse" data-target='#div_et2_4,#div_et2_4_screenshot'>错误</button>
+    <div id='div_et2_4' class="collapse in"> -->
+    
+    <pre style="text-align:left">
+    
+et2_4: Traceback (most recent call last):
+  File "E:\Code\MY_ATX-Test\Public\Decorator.py", line 114, in wrapper
+    ret = func(*args, **kwargs)
+  File "E:\Code\MY_ATX-Test\TestSuite_demo\TestCase\test_02_bootstrap.py", line 95, in test_04_webview_chromedriver
+    driver = self.set_chromedriver()
+  File "E:\Code\MY_ATX-Test\Public\BasePage.py", line 140, in set_chromedriver
+    driver(device_ip=device_ip, package=package, attach=True, activity=activity, process=process)
+  File "E:\Code\MY_ATX-Test\Public\chromedriver.py", line 77, in driver
+    self._launch_webdriver()
+  File "E:\Code\MY_ATX-Test\Public\chromedriver.py", line 47, in _launch_webdriver
+    p = subprocess.Popen(['chromedriver', '--port=' + str(self._port)])
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 775, in __init__
+    restore_signals, start_new_session)
+  File "C:\Program Files (x86)\Python37-32\lib\subprocess.py", line 1178, in _execute_child
+    startupinfo)
+FileNotFoundError: [WinError 2] 系统找不到指定的文件。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Code\MY_ATX-Test\Public\Decorator.py", line 132, in wrapper
+    raise Exception(flag + _screenshot(func.__qualname__))
+Exception: IMAGE:TestBootStrap.test_04_webview_chromedriver-20200505011837.PNG
+
+
+    </pre>
+    </div>
+    <td class="text-center" style="vertical-align: middle">
+    <div </br><a class="screenshot" href="javascript:void(0)" img="TestBootStrap.test_04_webview_chromedriver-20200505011837.PNG">TestBootStrap.test_04_webview_chromedriver-20200505011837.PNG</a></div></td>
+</tr>
+
+<tr id='et2_5' class='none'>
+    <td class='errorCase' style="vertical-align: middle"><div class='testcase'>test_05_webview_u2</div></td>
+    <td style="vertical-align: middle">直接用u2操作webview</td>
+    <td colspan='5' align='center'>
+    
+    <!--默认收起错误信息 -Findyou-->
+    <button id='btn_et2_5' type="button"  class="btn btn-xs collapsed" data-toggle="collapse" data-target='#div_et2_5'>错误</button>
+    <div id='div_et2_5' class="collapse">  
+
+    <!-- 默认展开错误信息 -Findyou /  修复失败按钮的颜色 -- Gelomen 
+    <button id='btn_et2_5' type="button"  class="btn btn-xs" data-toggle="collapse" data-target='#div_et2_5,#div_et2_5_screenshot'>错误</button>
+    <div id='div_et2_5' class="collapse in"> -->
+    
+    <pre style="text-align:left">
+    
+et2_5: Traceback (most recent call last):
+  File "E:\Code\MY_ATX-Test\Public\Decorator.py", line 114, in wrapper
+    ret = func(*args, **kwargs)
+  File "E:\Code\MY_ATX-Test\TestSuite_demo\TestCase\test_02_bootstrap.py", line 109, in test_05_webview_u2
+    self.d(resourceId="index-kw", className="android.widget.EditText").set_text("西湖美景")
+  File "C:\Users\Boss\AppData\Roaming\Python\Python37\site-packages\uiautomator2\session.py", line 982, in set_text
+    self.must_wait(timeout=timeout)
+  File "C:\Users\Boss\AppData\Roaming\Python\Python37\site-packages\uiautomator2\session.py", line 975, in must_wait
+    raise UiObjectNotFoundError({'code': -32002, 'method': 'wait'})
+uiautomator2.exceptions.UiObjectNotFoundError: -32002 Client error: &lt;&gt; data: , method: None
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Code\MY_ATX-Test\Public\Decorator.py", line 132, in wrapper
+    raise Exception(flag + _screenshot(func.__qualname__))
+Exception: IMAGE:TestBootStrap.test_05_webview_u2-20200505011858.PNG
+
+
+    </pre>
+    </div>
+    <td class="text-center" style="vertical-align: middle">
+    <div </br><a class="screenshot" href="javascript:void(0)" img="TestBootStrap.test_05_webview_u2-20200505011858.PNG">TestBootStrap.test_05_webview_u2-20200505011858.PNG</a></div></td>
+</tr>
+
+<tr id='pt2_6' class='hiddenRow'>
+    <td class='passCase' style="vertical-align: middle"><div class='testcase'>test_06_Bar_click</div></td>
+    <td style="vertical-align: middle">主页操作并退出</td>
+    <td colspan='5' align='center'>
+    
+    <!--默认收起错误信息 -Findyou-->
+    <button id='btn_pt2_6' type="button"  class="btn btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_6'>通过</button>
+    <div id='div_pt2_6' class="collapse">  
+
+    <!-- 默认展开错误信息 -Findyou /  修复失败按钮的颜色 -- Gelomen 
+    <button id='btn_pt2_6' type="button"  class="btn btn-xs" data-toggle="collapse" data-target='#div_pt2_6,#div_pt2_6_screenshot'>通过</button>
+    <div id='div_pt2_6' class="collapse in"> -->
+    
+    <pre style="text-align:left">
+    
+pt2_6: --&gt; home_page.click_tab
+点击Tab HOME
+--&gt; home_page.click_tab
+点击Tab Webview
+--&gt; home_page.click_tab
+点击Tab Baidu
+--&gt; home_page.click_tab
+点击Tab PERSONAL
+--&gt; home_page.click_logout_btn
+点击退出按钮
+--&gt; login_page.wait_page
+
+
+    </pre>
+    </div>
+    <td class="text-center" style="vertical-align: middle">
+    <div </div></td>
+</tr>
+
+<tr id='pt2_7' class='hiddenRow'>
+    <td class='passCase' style="vertical-align: middle"><div class='testcase'>test_07_login_again</div></td>
+    <td style="vertical-align: middle">再次登录</td>
+    <td colspan='5' align='center'>
+    
+    <!--默认收起错误信息 -Findyou-->
+    <button id='btn_pt2_7' type="button"  class="btn btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_7'>通过</button>
+    <div id='div_pt2_7' class="collapse">  
+
+    <!-- 默认展开错误信息 -Findyou /  修复失败按钮的颜色 -- Gelomen 
+    <button id='btn_pt2_7' type="button"  class="btn btn-xs" data-toggle="collapse" data-target='#div_pt2_7,#div_pt2_7_screenshot'>通过</button>
+    <div id='div_pt2_7' class="collapse in"> -->
+    
+    <pre style="text-align:left">
+    
+pt2_7: --&gt; login_page.click_login_btn
+点击登录按钮
+
+
+    </pre>
+    </div>
+    <td class="text-center" style="vertical-align: middle">
+    <div </div></td>
+</tr>
+
+<tr id='pt2_8' class='hiddenRow'>
+    <td class='passCase' style="vertical-align: middle"><div class='testcase'>test_08_swipe</div></td>
+    <td style="vertical-align: middle">swipe 滑动测试</td>
+    <td colspan='5' align='center'>
+    
+    <!--默认收起错误信息 -Findyou-->
+    <button id='btn_pt2_8' type="button"  class="btn btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_8'>通过</button>
+    <div id='div_pt2_8' class="collapse">  
+
+    <!-- 默认展开错误信息 -Findyou /  修复失败按钮的颜色 -- Gelomen 
+    <button id='btn_pt2_8' type="button"  class="btn btn-xs" data-toggle="collapse" data-target='#div_pt2_8,#div_pt2_8_screenshot'>通过</button>
+    <div id='div_pt2_8' class="collapse in"> -->
+    
+    <pre style="text-align:left">
+    
+pt2_8: --&gt; home_page.click_tab
+点击Tab HOME
+
+
+    </pre>
+    </div>
+    <td class="text-center" style="vertical-align: middle">
+    <div </div></td>
+</tr>
+
+<tr id='total_row' class="text-center active">
+    <td colspan='2'>总计</td>
+    <td>12</td>
+    <td>8</td>
+    <td>1</td>
+    <td>3</td>
+    <td>108.46秒</td>
+    <td>通过率：66.67%</td>
+</tr>
+</table>
+
+<div id='ending'>&nbsp;</div>
+    <div id="toTop" style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer; display: none">
+    <a><span class="glyphicon glyphicon-eject" style = "font-size:30px;" aria-hidden="true">
+    </span></a></div>
+    
+
+</body>
+</html>

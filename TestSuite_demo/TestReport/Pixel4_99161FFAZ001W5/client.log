@@ -1,0 +1,132 @@
+2020-05-05 01:20:36,615 - Pixel 4 - INFO - udid: 99161FFAZ001W5-f6:58:e4:65:54:59-Pixel_4
+2020-05-05 01:20:39,131 - Pixel 4 - DEBUG - --> apk_install.setUpClass
+2020-05-05 01:20:40,740 - Pixel 4 - DEBUG - <-- apk_install.setUpClass, Success
+
+2020-05-05 01:20:40,740 - Pixel 4 - DEBUG - --> apk_install.test_01_install_apk
+2020-05-05 01:21:04,474 - Pixel 4 - INFO - --> login_page.wait_page
+2020-05-05 01:21:20,224 - Pixel 4 - ERROR - Exception, Not in LoginPage
+2020-05-05 01:21:20,224 - Pixel 4 - ERROR - 	<-- login_page.wait_page, Exception, Error
+2020-05-05 01:21:20,224 - Pixel 4 - ERROR - Exception, Not in LoginPage
+2020-05-05 01:21:20,224 - Pixel 4 - ERROR - <-- apk_install.test_01_install_apk, Exception, Error
+
+2020-05-05 01:21:20,443 - Pixel 4 - DEBUG - --> apk_install.test_02_fail
+2020-05-05 01:21:26,568 - Pixel 4 - ERROR - AssertionError, 'Login' != '登录'
+- Login
++ 登录
+
+2020-05-05 01:21:26,568 - Pixel 4 - ERROR - <-- apk_install.test_02_fail, AssertionError, Fail
+
+2020-05-05 01:21:26,755 - Pixel 4 - DEBUG - --> apk_install.test_03_screenshot
+2020-05-05 01:21:27,646 - Pixel 4 - DEBUG - <-- apk_install.test_03_screenshot, Success
+
+2020-05-05 01:21:27,646 - Pixel 4 - DEBUG - --> apk_install.test_04_error
+2020-05-05 01:21:27,646 - Pixel 4 - ERROR - Exception, 手动ERROR!!!!!!!
+2020-05-05 01:21:27,646 - Pixel 4 - ERROR - <-- apk_install.test_04_error, Exception, Error
+
+2020-05-05 01:21:27,802 - Pixel 4 - DEBUG - --> apk_install.tearDownClass
+2020-05-05 01:21:27,865 - Pixel 4 - DEBUG - <-- apk_install.tearDownClass, Success
+
+2020-05-05 01:21:27,865 - Pixel 4 - DEBUG - --> TestBootStrap.setUpClass
+2020-05-05 01:21:27,943 - Pixel 4 - DEBUG - <-- TestBootStrap.setUpClass, Success
+
+2020-05-05 01:21:27,943 - Pixel 4 - DEBUG - --> TestBootStrap.setUp
+2020-05-05 01:21:27,943 - Pixel 4 - DEBUG - <-- TestBootStrap.setUp, Success
+
+2020-05-05 01:21:27,943 - Pixel 4 - DEBUG - --> TestBootStrap.test_01_login
+2020-05-05 01:21:27,943 - Pixel 4 - INFO - --> login_page.wait_page
+2020-05-05 01:21:35,021 - Pixel 4 - INFO - --> login_page.input_username
+2020-05-05 01:21:35,021 - Pixel 4 - INFO - 输入用户名:123456一二三
+2020-05-05 01:21:35,271 - Pixel 4 - INFO - --> login_page.input_password
+2020-05-05 01:21:35,271 - Pixel 4 - INFO - 输入密码:654321
+2020-05-05 01:21:35,802 - Pixel 4 - INFO - --> login_page.click_login_btn
+2020-05-05 01:21:35,802 - Pixel 4 - INFO - 点击登录按钮
+2020-05-05 01:21:36,193 - Pixel 4 - DEBUG - <-- TestBootStrap.test_01_login, Success
+
+2020-05-05 01:21:36,193 - Pixel 4 - DEBUG - --> TestBootStrap.tearDown
+2020-05-05 01:21:36,193 - Pixel 4 - DEBUG - <-- TestBootStrap.tearDown, Success
+
+2020-05-05 01:21:36,193 - Pixel 4 - DEBUG - --> TestBootStrap.setUp
+2020-05-05 01:21:36,193 - Pixel 4 - DEBUG - <-- TestBootStrap.setUp, Success
+
+2020-05-05 01:21:36,193 - Pixel 4 - DEBUG - --> TestBootStrap.test_02_show_toast
+2020-05-05 01:21:45,244 - Pixel 4 - DEBUG - <-- TestBootStrap.test_02_show_toast, Success
+
+2020-05-05 01:21:45,244 - Pixel 4 - DEBUG - --> TestBootStrap.tearDown
+2020-05-05 01:21:45,244 - Pixel 4 - DEBUG - <-- TestBootStrap.tearDown, Success
+
+2020-05-05 01:21:45,244 - Pixel 4 - DEBUG - --> TestBootStrap.setUp
+2020-05-05 01:21:45,244 - Pixel 4 - DEBUG - <-- TestBootStrap.setUp, Success
+
+2020-05-05 01:21:45,244 - Pixel 4 - DEBUG - --> TestBootStrap.test_03_auto_click_alert
+2020-05-05 01:21:47,259 - Pixel 4 - INFO - --> home_page.click_tab
+2020-05-05 01:21:47,931 - Pixel 4 - INFO - 点击Tab HOME
+2020-05-05 01:22:07,665 - Pixel 4 - DEBUG - <-- TestBootStrap.test_03_auto_click_alert, Success
+
+2020-05-05 01:22:07,665 - Pixel 4 - DEBUG - --> TestBootStrap.tearDown
+2020-05-05 01:22:07,665 - Pixel 4 - DEBUG - <-- TestBootStrap.tearDown, Success
+
+2020-05-05 01:22:07,665 - Pixel 4 - DEBUG - --> TestBootStrap.setUp
+2020-05-05 01:22:07,665 - Pixel 4 - DEBUG - <-- TestBootStrap.setUp, Success
+
+2020-05-05 01:22:07,665 - Pixel 4 - DEBUG - --> TestBootStrap.test_04_webview_chromedriver
+2020-05-05 01:22:11,294 - Pixel 4 - ERROR - Exception, [WinError 2] 系统找不到指定的文件。
+2020-05-05 01:22:11,294 - Pixel 4 - ERROR - <-- TestBootStrap.test_04_webview_chromedriver, Exception, Error
+
+2020-05-05 01:22:11,513 - Pixel 4 - DEBUG - --> TestBootStrap.tearDown
+2020-05-05 01:22:11,513 - Pixel 4 - DEBUG - <-- TestBootStrap.tearDown, Success
+
+2020-05-05 01:22:11,513 - Pixel 4 - DEBUG - --> TestBootStrap.setUp
+2020-05-05 01:22:11,513 - Pixel 4 - DEBUG - <-- TestBootStrap.setUp, Success
+
+2020-05-05 01:22:11,513 - Pixel 4 - DEBUG - --> TestBootStrap.test_05_webview_u2
+2020-05-05 01:22:31,650 - Pixel 4 - ERROR - Exception, -32002 Client error: <> data: , method: None
+2020-05-05 01:22:31,650 - Pixel 4 - ERROR - <-- TestBootStrap.test_05_webview_u2, Exception, Error
+
+2020-05-05 01:22:31,853 - Pixel 4 - DEBUG - --> TestBootStrap.tearDown
+2020-05-05 01:22:31,853 - Pixel 4 - DEBUG - <-- TestBootStrap.tearDown, Success
+
+2020-05-05 01:22:31,853 - Pixel 4 - DEBUG - --> TestBootStrap.setUp
+2020-05-05 01:22:31,853 - Pixel 4 - DEBUG - <-- TestBootStrap.setUp, Success
+
+2020-05-05 01:22:31,853 - Pixel 4 - DEBUG - --> TestBootStrap.test_06_Bar_click
+2020-05-05 01:22:31,853 - Pixel 4 - INFO - --> home_page.click_tab
+2020-05-05 01:22:32,681 - Pixel 4 - INFO - 点击Tab HOME
+2020-05-05 01:22:32,681 - Pixel 4 - INFO - --> home_page.click_tab
+2020-05-05 01:22:33,338 - Pixel 4 - INFO - 点击Tab Webview
+2020-05-05 01:22:33,338 - Pixel 4 - INFO - --> home_page.click_tab
+2020-05-05 01:22:34,260 - Pixel 4 - INFO - 点击Tab Baidu
+2020-05-05 01:22:34,260 - Pixel 4 - INFO - --> home_page.click_tab
+2020-05-05 01:22:35,041 - Pixel 4 - INFO - 点击Tab PERSONAL
+2020-05-05 01:22:35,041 - Pixel 4 - INFO - --> home_page.click_logout_btn
+2020-05-05 01:22:35,041 - Pixel 4 - INFO - 点击退出按钮
+2020-05-05 01:22:35,431 - Pixel 4 - INFO - --> login_page.wait_page
+2020-05-05 01:22:35,509 - Pixel 4 - DEBUG - <-- TestBootStrap.test_06_Bar_click, Success
+
+2020-05-05 01:22:35,509 - Pixel 4 - DEBUG - --> TestBootStrap.tearDown
+2020-05-05 01:22:35,509 - Pixel 4 - DEBUG - <-- TestBootStrap.tearDown, Success
+
+2020-05-05 01:22:35,509 - Pixel 4 - DEBUG - --> TestBootStrap.setUp
+2020-05-05 01:22:35,509 - Pixel 4 - DEBUG - <-- TestBootStrap.setUp, Success
+
+2020-05-05 01:22:35,509 - Pixel 4 - DEBUG - --> TestBootStrap.test_07_login_again
+2020-05-05 01:22:35,509 - Pixel 4 - INFO - --> login_page.click_login_btn
+2020-05-05 01:22:35,509 - Pixel 4 - INFO - 点击登录按钮
+2020-05-05 01:22:36,119 - Pixel 4 - DEBUG - <-- TestBootStrap.test_07_login_again, Success
+
+2020-05-05 01:22:36,119 - Pixel 4 - DEBUG - --> TestBootStrap.tearDown
+2020-05-05 01:22:36,119 - Pixel 4 - DEBUG - <-- TestBootStrap.tearDown, Success
+
+2020-05-05 01:22:36,119 - Pixel 4 - DEBUG - --> TestBootStrap.setUp
+2020-05-05 01:22:36,119 - Pixel 4 - DEBUG - <-- TestBootStrap.setUp, Success
+
+2020-05-05 01:22:36,119 - Pixel 4 - DEBUG - --> TestBootStrap.test_08_swipe
+2020-05-05 01:22:36,119 - Pixel 4 - INFO - --> home_page.click_tab
+2020-05-05 01:22:36,697 - Pixel 4 - INFO - 点击Tab HOME
+2020-05-05 01:22:42,775 - Pixel 4 - DEBUG - <-- TestBootStrap.test_08_swipe, Success
+
+2020-05-05 01:22:42,775 - Pixel 4 - DEBUG - --> TestBootStrap.tearDown
+2020-05-05 01:22:42,775 - Pixel 4 - DEBUG - <-- TestBootStrap.tearDown, Success
+
+2020-05-05 01:22:42,775 - Pixel 4 - DEBUG - --> TestBootStrap.tearDownClass
+2020-05-05 01:22:42,837 - Pixel 4 - DEBUG - <-- TestBootStrap.tearDownClass, Success
+

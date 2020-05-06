@@ -1,0 +1,22 @@
+[
+  {
+    "prob": 1,
+    "actions": [
+      {
+        "xpath": "//android.widget.Button[@text='list']",
+        "action": "CLICK",
+        "index": 0,
+        "throttle": 500
+      }]
+  },
+  {
+    "prob": 1,
+    "actions": [
+      {
+        "xpath": "//android.widget.Button[@text='Login']",
+        "action": "CLICK",
+        "index": 0,
+        "throttle": 500
+      }]
+  }
+]
