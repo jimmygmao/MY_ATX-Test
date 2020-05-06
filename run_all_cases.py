@@ -16,7 +16,7 @@ if __name__ == '__main__':
     cs = CaseStrategy()
     cases = cs.collect_cases(suite=True)
     Drivers().run(cases)
-    
+
 
     # Generate zip_report file  压缩测试报告文件
     # zip_report()
